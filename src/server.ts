@@ -1,6 +1,7 @@
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 if (process.env.NODE_ENV != "production") {
     const dotenv = require("dotenv");
     dotenv.config({
@@ -124,17 +125,19 @@ const getEmentas = () => {
 const startServer = async () => {
     const ementas: Array<Ementa> = await getEmentas();
 
-    const app = express();
+    const app: express.Express = express();
     const PORT = process.env.PORT || 8080;
+    const limiter: rateLimit.RateLimit = rateLimit({
+        windowMs: 15 * 60 * 1000,
+        max: 100
+    });
 
     app.use(helmet());
     app.use(cors());
+    app.use(limiter);
 
     app.get("/ementas", (req: express.Request, res: express.Response) => {
-        const response = {
-            message: "hello"
-        };
-        res.json(response);
+        res.json(ementas);
     });
 
     return app.listen(PORT, () => {
