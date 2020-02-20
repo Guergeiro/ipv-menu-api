@@ -140,6 +140,10 @@ const startServer = async () => {
         res.json(ementas);
     });
 
+    app.get("/", (req: express.Request, res: express.Response) => {
+        res.redirect("https://github.com/Guergeiro/ementas-api");
+    });
+
     return app.listen(PORT, () => {
         console.log(`A ${process.env.NODE_ENV} server is listening on port ${PORT}`);
     });
