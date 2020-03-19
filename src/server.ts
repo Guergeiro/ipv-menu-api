@@ -128,15 +128,15 @@ const startServer = async () => {
     const app: express.Express = express();
     const PORT = process.env.PORT || 8080;
     const limiter: rateLimit.RateLimit = rateLimit({
-        windowMs: 15 * 60 * 1000,
-        max: 100
+        windowMs: 24 * 3600 * 1000, // 24h
+        max: 100 // 100requests/windowsMs
     });
 
     app.use(helmet());
     app.use(cors());
     app.use(limiter);
 
-    app.get("/ementas", (req: express.Request, res: express.Response) => {
+    app.get("/estgv", (req: express.Request, res: express.Response) => {
         res.json(ementas);
     });
 
