@@ -15,7 +15,7 @@ A simple API that wraps around the cafeteria's menu from ESTGV
 
 ## Documentation
 
-[![GET /estgv](https://img.shields.io/static/v1?label=GET&message=%2Fementas&color=success)](https://ementas-api.herokuapp.com/estgv)
+[![GET /estgv](https://img.shields.io/static/v1?label=GET&message=%2Festgv&color=success)](https://ementas-api.herokuapp.com/estgv)
 
 ```json
 // Example response
@@ -82,4 +82,4 @@ As you can see in [config.env](https://github.com/Guergeiro/ementas-api/blob/mas
 1. :globe_with_meridians: **Zamzar API Key** - read more about [Zamzar](https://developers.zamzar.com/)
 2. :construction: **API URL** - should be changed according to prod or dev environment
 
-    :heavy*exclamation_mark: This are all Node.js environment variables. While in \_production* the [config.env](https://github.com/Guergeiro/ementas-api/blob/master/src/config.env) will **NOT** be loaded, therefore this variables should be set at environment.
+    :heavy_exclamation_mark: This are all Node.js environment variables. While in _production_ the [config.env](https://github.com/Guergeiro/ementas-api/blob/master/src/config.env) will **NOT** be loaded, therefore this variables should be set at environment.
