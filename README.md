@@ -11,11 +11,11 @@ A simple API that wraps around the cafeteria's menu from ESTGV
 
 ## Miscellaneous
 
-[![Build Status](https://travis-ci.com/Guergeiro/ementas-api.svg?branch=master)](https://travis-ci.com/Guergeiro/ementas-api) [![Deployment](https://img.shields.io/static/v1?label=heroku&logo=heroku&message=Deployment&color=informational)](https://www.heroku.com/) [![License](https://img.shields.io/github/license/Guergeiro/ementas-api)](https://github.com/Guergeiro/ementas-api/blob/master/LICENSE) [![API](https://img.shields.io/website?down_color=purple&down_message=sleeping&label=API&up_color=yellow&up_message=online&url=https%3A%2F%2Fementas-api.herokuapp.com%2F)](https://ementas-api.herokuapp.com/)
+[![Build Status](https://travis-ci.com/Guergeiro/ementas-api.svg?branch=master)](https://travis-ci.com/Guergeiro/ementas-api) [![Deployment](https://img.shields.io/static/v1?label=heroku&logo=heroku&message=Deployment&color=informational)](https://www.heroku.com/) [![License](https://img.shields.io/github/license/Guergeiro/ementas-api)](./LICENSE)
 
 ## Documentation
 
-[![GET /estgv](https://img.shields.io/static/v1?label=GET&message=%2Festgv&color=success)](https://ementas-api.herokuapp.com/estgv)
+[![GET /estgv](https://img.shields.io/static/v1?label=GET&message=%2Festgv&color=yellow)](https://ementas-api.herokuapp.com/estgv)
 
 ```json
 // Example response
@@ -82,4 +82,4 @@ As you can see in [config.env](https://github.com/Guergeiro/ementas-api/blob/mas
 1. :globe_with_meridians: **Zamzar API Key** - read more about [Zamzar](https://developers.zamzar.com/)
 2. :construction: **API URL** - should be changed according to prod or dev environment
 
-    :heavy_exclamation_mark: This are all Node.js environment variables. While in _production_ the [config.env](https://github.com/Guergeiro/ementas-api/blob/master/src/config.env) will **NOT** be loaded, therefore this variables should be set at environment.
+    :heavy*exclamation_mark: This are all Node.js environment variables. While in \_production* the [config.env](https://github.com/Guergeiro/ementas-api/blob/master/src/config.env) will **NOT** be loaded, therefore this variables should be set at environment.

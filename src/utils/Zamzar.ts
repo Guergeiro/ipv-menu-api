@@ -14,24 +14,29 @@ export default class Zamzar {
         this.apiUrl = apiUrl;
     }
 
-    downloadFile = (fileId: number, fileDest: string): Promise<any> => {
-        return new Promise<any>(async (resolve, reject) => {
+    downloadFile = (fileId: number, fileDest: string) => {
+        return new Promise<string>((resolve, reject) => {
             const headers = {
                 Authorization: "Basic " + Buffer.from(`${this.apiKey}:`).toString("base64")
             };
-            const res = await fetch(`https://${this.apiUrl}.zamzar.com/v1/files/${fileId}/content`, {
+            fetch(`https://${this.apiUrl}.zamzar.com/v1/files/${fileId}/content`, {
                 headers: headers
-            });
-            const writeStream = createWriteStream(`${fileDest}`);
-            writeStream.on("ready", () => {
-                res.body.pipe(writeStream);
-            });
-            writeStream.on("error", (e) => {
-                reject(e);
-            });
-            writeStream.on("close", () => {
-                resolve(fileDest);
-            });
+            })
+                .then((data) => {
+                    const writeStream = createWriteStream(`${fileDest}`);
+                    writeStream.on("ready", () => {
+                        data.body.pipe(writeStream);
+                    });
+                    writeStream.on("error", (e) => {
+                        return reject(e);
+                    });
+                    writeStream.on("close", () => {
+                        return resolve(fileDest);
+                    });
+                })
+                .catch((error) => {
+                    return reject(error);
+                });
         });
     };
 
