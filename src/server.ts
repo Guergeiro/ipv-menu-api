@@ -2,12 +2,7 @@ import express from "express";
 import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
-if (process.env.NODE_ENV != "production") {
-    const dotenv = require("dotenv");
-    dotenv.config({
-        path: `${__dirname}/config.env`
-    });
-}
+import path from "path";
 import { parseEmenta } from "./ementas/EmentaParser";
 import Zamzar from "./utils/Zamzar";
 import { ZamzarFile, ZamzarJob } from "./utils/Zamzar";
@@ -16,7 +11,7 @@ import { Ementa } from "./ementas/Ementa";
 
 const zamzar = new Zamzar(<string>process.env.API_KEY, <string>process.env.API_URL);
 
-const checkExistingFile = async () => {
+async function checkExistingFile() {
     try {
         const allFiles: Array<ZamzarFile> = await zamzar.getAllFiles();
 
@@ -39,9 +34,9 @@ const checkExistingFile = async () => {
         throw error;
     }
     return true;
-};
+}
 
-const downloadNewEmenta = async () => {
+async function downloadNewEmenta() {
     try {
         // Gets all files
         const allFiles: Array<ZamzarFile> = await zamzar.getAllFiles();
@@ -83,9 +78,9 @@ const downloadNewEmenta = async () => {
         throw error;
     }
     return true;
-};
+}
 
-const getEmentas = async () => {
+async function getEmentas() {
     try {
         await checkExistingFile();
         // Parse ementas
@@ -111,10 +106,10 @@ const getEmentas = async () => {
         const ementas = parseEmenta(`${__dirname}/ESTGV.xlsx`);
         return ementas;
     }
-};
+}
 
-const startServer = async () => {
-    const ementas: Array<Ementa> = await getEmentas();
+async function startServer() {
+    const ementas: Array<Ementa> = [];
 
     const app: express.Express = express();
     const PORT = process.env.PORT || 8080;
@@ -126,18 +121,31 @@ const startServer = async () => {
     app.use(helmet());
     app.use(cors());
     app.use(limiter);
+    app.use(express.urlencoded({ extended: true }));
 
-    app.get("/estgv", (req: express.Request, res: express.Response) => {
-        res.json(ementas);
+    // Logging for each request
+    app.use(function(req: express.Request, res: express.Response, next: express.NextFunction) {
+        const now = new Date();
+        const time = `${now.toLocaleDateString()} - ${now.toLocaleTimeString()}`;
+        const path = `"${req.method} ${req.path}"`;
+        const m = `${req.ip} - ${time} - ${path}`;
+        // eslint-disable-next-line no-console
+        console.log(m);
+        return next();
     });
 
-    app.get("/", (req: express.Request, res: express.Response) => {
-        res.redirect("https://github.com/Guergeiro/ementas-api");
+    app.use(function(req: express.Request, res: express.Response, next: express.NextFunction) {
+        if (req["headers"]["accept"] == "application/json") {
+            return res.json(ementas);
+        }
+        return next();
     });
 
-    return app.listen(PORT, () => {
+    app.use(express.static(path.join(__dirname, "../public")));
+
+    return app.listen(PORT, function() {
         console.log(`A ${process.env.NODE_ENV} server is listening on port ${PORT}`);
     });
-};
+}
 
 startServer();
