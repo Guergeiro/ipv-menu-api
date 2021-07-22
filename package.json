@@ -29,7 +29,7 @@
     "form-data": "^3.0.0",
     "helmet": "^3.21.2",
     "node-fetch": "^2.6.1",
-    "xlsx": "^0.15.5"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.6",
